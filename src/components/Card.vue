@@ -2,6 +2,9 @@
 defineProps({
   imageUrl: String,
   title: String,
+  price: Number,
+  isFavorite: Boolean,
+  isAdded: Boolean,
 })
 </script>
 
@@ -15,7 +18,7 @@ defineProps({
     <div class="flex justify-between mt-5">
       <div class="flex flex-col">
         <span class="text-slate-400">Цена:</span>
-        <b>1205 руб.</b>
+        <b>{{ price }} руб.</b>
       </div>
       <img alt="Plus" src="/plus.svg" />
     </div>
