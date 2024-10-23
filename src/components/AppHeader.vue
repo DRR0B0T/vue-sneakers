@@ -6,7 +6,7 @@ export default {
 
 <template>
   <header
-    class="bg-white flex items-center justify-between border-b border-slate-300 px-10 py-8"
+    class="bg-white flex items-center justify-between border-b border-slate-200 px-10 py-8"
   >
     <div class="flex items-center gap-4">
       <img alt="Logo" class="w-10" src="/logo.png" />
