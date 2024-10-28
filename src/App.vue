@@ -1,39 +1,47 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import axios from 'axios'
 
 import AppHeader from '@/components/AppHeader.vue'
 import CardList from '@/components/CardList.vue'
 
 const items = ref([])
-const filters = ref({
-  sortBy: '',
+const filters = reactive({
+  sortBy: 'title',
   searchQuery: '',
 })
 
 const onChangeSelect = e => {
-  filters.value.sortBy = e.target.value
+  filters.sortBy = e.target.value
 }
 
-onMounted(async () => {
-  try {
-    const { data } = await axios.get('https://fd192f320b005090.mokky.dev/items')
-    items.value = data
-  } catch (e) {
-    console.error(e)
-  }
-})
+const onInputSearch = e => {
+  filters.searchQuery = e.target.value
+}
 
-watch(filters.value.sortBy, async () => {
+const fetchData = async () => {
   try {
+    const params = {
+      sortBy: filters.sortBy,
+    }
+
+    if (filters.searchQuery) {
+      params.title = `*${filters.searchQuery}*`
+    }
+
     const { data } = await axios.get(
-      'https://fd192f320b005090.mokky.dev/items?sortBy=' + filters.value.sortBy,
+      `https://fd192f320b005090.mokky.dev/items`,
+      { params },
     )
     items.value = data
   } catch (e) {
     console.error(e)
   }
-})
+}
+
+onMounted(fetchData)
+
+watch(filters, fetchData)
 </script>
 
 <template>
@@ -60,6 +68,7 @@ watch(filters.value.sortBy, async () => {
               class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
               placeholder="Поиск..."
               type="text"
+              @input="onInputSearch"
             />
           </div>
         </div>
