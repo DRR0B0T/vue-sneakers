@@ -1,15 +1,34 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
 import AppHeader from '@/components/AppHeader.vue'
 import CardList from '@/components/CardList.vue'
 
 const items = ref([])
+const filters = ref({
+  sortBy: '',
+  searchQuery: '',
+})
+
+const onChangeSelect = e => {
+  filters.value.sortBy = e.target.value
+}
 
 onMounted(async () => {
   try {
     const { data } = await axios.get('https://fd192f320b005090.mokky.dev/items')
+    items.value = data
+  } catch (e) {
+    console.error(e)
+  }
+})
+
+watch(filters.value.sortBy, async () => {
+  try {
+    const { data } = await axios.get(
+      'https://fd192f320b005090.mokky.dev/items?sortBy=' + filters.value.sortBy,
+    )
     items.value = data
   } catch (e) {
     console.error(e)
@@ -28,10 +47,11 @@ onMounted(async () => {
         <div class="flex gap-4">
           <select
             class="py-2 px-3 border rounded-md outline-none cursor-pointer"
+            @change="onChangeSelect"
           >
-            <option value="1">По названию</option>
-            <option value="2">По цене (дешёвые)</option>
-            <option value="3">По цене (дорогие)</option>
+            <option value="name">По названию</option>
+            <option value="price">По цене (дешёвые)</option>
+            <option value="-price">По цене (дорогие)</option>
           </select>
 
           <div class="relative">
