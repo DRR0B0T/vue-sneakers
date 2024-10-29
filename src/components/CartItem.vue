@@ -7,7 +7,7 @@
     <div class="flex flex-col justify-between">
       <p>Кроссовки 5545dddsdfsdfsdfsdfsdf</p>
       <div class="flex justify-between mt-2">
-        <b>5000 р.</b>
+        <b>5000 ₽</b>
         <img
           alt="Close card"
           class="opacity-40 hover:opacity-100 transition cursor-pointer"
