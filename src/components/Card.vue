@@ -1,13 +1,26 @@
 <script setup>
-defineProps({
+import { inject } from 'vue'
+
+const props = defineProps({
+  id: Number,
   imageUrl: String,
   title: String,
   price: Number,
+  year: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
   onClickAdd: Function,
-  onFavoriteAdd: Function,
 })
+
+const onFavoriteAdd = inject('onFavoriteAdd')
+
+const onClickFavorite = () => {
+  const obj = {
+    ...props,
+    parentId: props.id,
+  }
+  onFavoriteAdd(obj)
+}
 </script>
 
 <template>
@@ -18,17 +31,17 @@ defineProps({
       :src="!isFavorite ? '/like-1.svg' : '/like-2.svg'"
       alt="Like 2"
       class="absolute top-8 left-8"
-      @click="onFavoriteAdd"
+      @click="onClickFavorite"
     />
 
-    <img :src="imageUrl" alt="Sneakers" />
+    <img :src="imageUrl" alt="Sneakers" class="h-52" />
 
     <p class="mt-2">{{ title }}</p>
 
     <div class="flex justify-between mt-2">
       <div class="flex flex-col">
         <span class="text-slate-400">Цена:</span>
-        <b>{{ price }} руб.</b>
+        <b>{{ price }} ₽</b>
       </div>
       <img
         :src="!isAdded ? ' /plus.svg' : '/checked.svg'"

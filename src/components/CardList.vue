@@ -5,9 +5,6 @@ defineProps({
   items: Array,
 })
 
-const onFavoriteAdd = () => {
-  alert('Favorite Added')
-}
 const onClickAdd = () => {
   alert('item Added')
 }
@@ -17,6 +14,7 @@ const onClickAdd = () => {
   <div class="grid grid-cols-4 gap-5 mt-5">
     <Card
       v-for="item in items"
+      :id="item.id"
       :key="item.id"
       :imageUrl="item.imageUrl"
       :isAdded="false"
