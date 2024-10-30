@@ -20,7 +20,7 @@ const onClickAdd = () => {
       :key="item.id"
       :imageUrl="item.imageUrl"
       :isAdded="false"
-      :isFavorite="false"
+      :isFavorite="item.isFavorite"
       :onClickAdd="onClickAdd"
       :onFavoriteAdd="onFavoriteAdd"
       :price="item.price"
