@@ -4,12 +4,23 @@ import axios from 'axios'
 
 import AppHeader from '@/components/AppHeader.vue'
 import CardList from '@/components/CardList.vue'
+import Drawer from '@/components/Drawer.vue'
 
 const items = ref([])
+const drawerOpen = ref(false)
+
 const filters = reactive({
   sortBy: 'title',
   searchQuery: '',
 })
+
+const closeDrawer = () => {
+  drawerOpen.value = false
+}
+
+const openDrawer = () => {
+  drawerOpen.value = true
+}
 
 const onChangeSelect = e => {
   filters.sortBy = e.target.value
@@ -99,13 +110,13 @@ onMounted(async () => {
 
 watch(filters, fetchData)
 
-provide('onFavoriteAdd', onFavoriteAdd)
+provide('cartActions', { openDrawer, closeDrawer })
 </script>
 
 <template>
+  <Drawer v-if="drawerOpen" />
   <div class="w-4/5 m-auto bg-white rounded-xl shadow-xl mt-14 mb-14">
-    <!--    <Drawer />-->
-    <AppHeader />
+    <AppHeader @open-drawer="openDrawer" />
     <div class="p-10">
       <div class="flex justify-between items-center">
         <h2 class="text-4xl font-bold mb-8">Все кроссовки</h2>
@@ -131,7 +142,7 @@ provide('onFavoriteAdd', onFavoriteAdd)
           </div>
         </div>
       </div>
-      <CardList :items="items" @onFavoriteAdd="onFavoriteAdd" />
+      <CardList :items="items" @on-favorite-add="onFavoriteAdd" />
     </div>
   </div>
 </template>
