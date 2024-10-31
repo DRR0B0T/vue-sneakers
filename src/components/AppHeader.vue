@@ -1,7 +1,5 @@
-<script>
-export default {
-  name: 'AppHeader',
-}
+<script setup>
+const emit = defineEmits(['openDrawer'])
 </script>
 
 <template>
@@ -18,6 +16,7 @@ export default {
     <ul class="flex items-center gap-10">
       <li
         class="flex items-center gap-3 text-gray-500 hover:text-black cursor-pointer"
+        @click="emit('openDrawer')"
       >
         <img alt="Cart" src="/cart.svg" />
         <b>1205 руб.</b>

@@ -54,13 +54,21 @@ const onFavoriteAdd = async item => {
   }
 }
 
+const addToCart = item => {
+  item.isAdded = true
+  cart.value.push(item)
+}
+
+const removeFromCart = item => {
+  item.isAdded = false
+  cart.value.splice(cart.value.indexOf(item), 1)
+}
+
 const onAddToCart = item => {
   if (!item.isAdded) {
-    item.isAdded = true
-    cart.value.push(item)
+    addToCart(item)
   } else {
-    item.isAdded = false
-    cart.value.splice(cart.value.indexOf(item), 1)
+    removeFromCart(item)
   }
 }
 
@@ -121,7 +129,7 @@ onMounted(async () => {
 
 watch(filters, fetchData)
 
-provide('cartActions', { cart, openDrawer, closeDrawer })
+provide('cartActions', { cart, openDrawer, closeDrawer, removeFromCart })
 </script>
 
 <template>
