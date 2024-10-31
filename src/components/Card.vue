@@ -1,7 +1,5 @@
 <script setup>
-import { inject } from 'vue'
-
-const props = defineProps({
+defineProps({
   id: Number,
   imageUrl: String,
   title: String,
@@ -9,18 +7,9 @@ const props = defineProps({
   year: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onClickAdd: Function,
+  onAddToCart: Function,
+  onClickFavorite: Function,
 })
-
-const onFavoriteAdd = inject('onFavoriteAdd')
-
-const onClickFavorite = () => {
-  const obj = {
-    ...props,
-    parentId: props.id,
-  }
-  onFavoriteAdd(obj)
-}
 </script>
 
 <template>
@@ -46,7 +35,7 @@ const onClickFavorite = () => {
       <img
         :src="!isAdded ? ' /plus.svg' : '/checked.svg'"
         alt="Plus"
-        @click="onClickAdd"
+        @click="onAddToCart"
       />
     </div>
   </div>

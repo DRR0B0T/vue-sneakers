@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, provide, reactive, ref, watch } from 'vue'
+import { computed, onMounted, provide, reactive, ref, watch } from 'vue'
 import axios from 'axios'
 
 import AppHeader from '@/components/AppHeader.vue'
@@ -9,6 +9,10 @@ import Drawer from '@/components/Drawer.vue'
 const items = ref([])
 const cart = ref([])
 const drawerOpen = ref(false)
+
+const totalPrice = computed(() =>
+  cart.value.reduce((acc, item) => acc + item.price, 0),
+)
 
 const filters = reactive({
   sortBy: 'title',
@@ -135,7 +139,7 @@ provide('cartActions', { cart, openDrawer, closeDrawer, removeFromCart })
 <template>
   <Drawer v-if="drawerOpen" />
   <div class="w-4/5 m-auto bg-white rounded-xl shadow-xl mt-14 mb-14">
-    <AppHeader @open-drawer="openDrawer" />
+    <AppHeader :total-price="totalPrice" @open-drawer="openDrawer" />
     <div class="p-10">
       <div class="flex justify-between items-center">
         <h2 class="text-4xl font-bold mb-8">Все кроссовки</h2>
