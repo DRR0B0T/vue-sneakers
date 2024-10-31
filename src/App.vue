@@ -7,6 +7,7 @@ import CardList from '@/components/CardList.vue'
 import Drawer from '@/components/Drawer.vue'
 
 const items = ref([])
+const cart = ref([])
 const drawerOpen = ref(false)
 
 const filters = reactive({
@@ -50,6 +51,16 @@ const onFavoriteAdd = async item => {
     }
   } catch (e) {
     console.error(e)
+  }
+}
+
+const onAddToCart = item => {
+  if (!item.isAdded) {
+    item.isAdded = true
+    cart.value.push(item)
+  } else {
+    item.isAdded = false
+    cart.value.splice(cart.value.indexOf(item), 1)
   }
 }
 
@@ -110,7 +121,7 @@ onMounted(async () => {
 
 watch(filters, fetchData)
 
-provide('cartActions', { openDrawer, closeDrawer })
+provide('cartActions', { cart, openDrawer, closeDrawer })
 </script>
 
 <template>
@@ -142,7 +153,11 @@ provide('cartActions', { openDrawer, closeDrawer })
           </div>
         </div>
       </div>
-      <CardList :items="items" @on-favorite-add="onFavoriteAdd" />
+      <CardList
+        :items="items"
+        @on-add-to-cart="onAddToCart"
+        @on-favorite-add="onFavoriteAdd"
+      />
     </div>
   </div>
 </template>
