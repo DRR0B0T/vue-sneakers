@@ -155,6 +155,13 @@ onMounted(async () => {
 
 watch(filters, fetchData)
 
+watch(cart, () => {
+  items.value = items.value.map(item => ({
+    ...item,
+    isAdded: false,
+  }))
+})
+
 provide('cartActions', { cart, openDrawer, closeDrawer, removeFromCart })
 </script>
 
