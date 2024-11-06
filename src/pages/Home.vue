@@ -20,12 +20,13 @@ const onInputSearch = e => {
 }
 
 const onFavoriteAdd = async item => {
-  item.isFavorite = !item.isFavorite
   try {
     if (!item.isFavorite) {
       const params = {
         parentId: item.id,
       }
+      item.isFavorite = true
+
       const { data } = await axios.post(
         `https://fd192f320b005090.mokky.dev/favorites`,
         params,
@@ -33,6 +34,8 @@ const onFavoriteAdd = async item => {
 
       item.favoriteId = data.id
     } else {
+      item.isFavorite = false
+
       await axios.delete(
         `https://fd192f320b005090.mokky.dev/favorites/${item.favoriteId}`,
       )
