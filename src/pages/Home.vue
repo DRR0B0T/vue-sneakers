@@ -23,7 +23,7 @@ const onFavoriteAdd = async item => {
   try {
     if (!item.isFavorite) {
       const params = {
-        parentId: item.id,
+        item_id: item.id,
       }
       item.isFavorite = true
 
@@ -52,7 +52,7 @@ const fetchFavorites = async () => {
     )
 
     items.value = items.value.map(item => {
-      const favorite = favorites.find(fav => fav.parentId === item.id)
+      const favorite = favorites.find(fav => fav.item_id === item.id)
       if (!favorite) {
         return item
       }
