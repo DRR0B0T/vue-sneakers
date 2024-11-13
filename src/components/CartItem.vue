@@ -1,4 +1,6 @@
 <script setup>
+const emit = defineEmits(['onClickRemove'])
+
 defineProps({
   id: Number,
   imageUrl: String,
@@ -19,6 +21,7 @@ defineProps({
           alt="Close card"
           class="opacity-40 hover:opacity-100 transition cursor-pointer"
           src="/close.svg"
+          @click="() => emit('onClickRemove')"
         />
       </div>
     </div>
